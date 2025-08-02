@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServer";
+
+service QuizService {
+  rpc StreamQuestions(Empty) returns (stream Question);
+  rpc SubmitAnswers(stream Answer) returns (Empty);
+}
+
+message Empty {}
+
+message Question {
+  string id = 1;
+  string text = 2;
+  int64 timestamp = 3;
+}
+
+message Answer {
+  string student_id = 1;
+  string question_id = 2;
+  string answer_text = 3;
+  int64 timestamp = 4;
+}
