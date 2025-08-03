@@ -1,23 +1,26 @@
 syntax = "proto3";
 
-option csharp_namespace = "GrpcServer";
+option csharp_namespace = "Quiz.Grpc";
+
+package quiz;
 
 service QuizService {
-  rpc StreamQuestions(Empty) returns (stream Question);
-  rpc SubmitAnswers(stream Answer) returns (Empty);
+  rpc ConductQuiz(stream QuizMessage) returns (stream QuizMessage);
 }
 
-message Empty {}
-
-message Question {
-  string id = 1;
-  string text = 2;
-  int64 timestamp = 3;
+enum MessageType {
+  UNKNOWN = 0;
+  QUESTION = 1;
+  ANSWER = 2;
+  FEEDBACK = 3; 
 }
 
-message Answer {
-  string student_id = 1;
-  string question_id = 2;
-  string answer_text = 3;
-  int64 timestamp = 4;
+message QuizMessage {
+  MessageType type = 1;     
+  string sender_id = 2;     
+  string sender_role = 3;   
+  string quiz_id = 4;       
+  string question_id = 5;   
+  string content = 6;       
+  int64 timestamp = 7;      
 }
