@@ -29,15 +29,15 @@ public class QuizServiceImpl : QuizService.QuizServiceBase
                 Console.WriteLine($"[RECEIVED] {message.SenderRole}({message.SenderId}) → {message.Type}: {message.Content}");
 
                 // Jika pesan masuk dari mahasiswa, server bisa kirim feedback balik
-                if (message.Type == MessageType.Answer && message.SenderRole == "mahasiswa")
+                if (message.Type == MessageType.Question && message.SenderRole == "dosen")
                 {
                     var feedback = new QuizMessage
                     {
-                        Type = MessageType.Feedback,
+                        Type = MessageType.Question,
                         SenderId = "dosen-system",
                         SenderRole = "dosen",
                         QuestionId = message.QuestionId,
-                        Content = $"Jawaban diterima dari {message.SenderId}.",
+                        Content = $"Soal dari {message.SenderId}.",
                         Timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
                     };
 

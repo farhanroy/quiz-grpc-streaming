@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kmpGrpc)
+    id("io.github.timortel.kmpgrpc.plugin") version "1.0.0"
 }
 
 kotlin {
@@ -17,7 +17,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -28,11 +28,13 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+
+            implementation("io.grpc:grpc-okhttp:1.74.0")
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -43,6 +45,9 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta04")
+            implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -85,8 +90,7 @@ kmpGrpc {
     common()
     jvm()
     android()
-    js()
     native()
 
-    protoSourceFolders = project.files("../protos/src/main/proto")
+    protoSourceFolders = project.files("../proto")
 }
