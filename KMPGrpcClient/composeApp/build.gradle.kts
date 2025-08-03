@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kmpGrpc)
 }
 
 kotlin {
@@ -80,3 +81,12 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
+kmpGrpc {
+    common()
+    jvm()
+    android()
+    js()
+    native()
+
+    protoSourceFolders = project.files("../protos/src/main/proto")
+}
